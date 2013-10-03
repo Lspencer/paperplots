@@ -2401,7 +2401,7 @@ pro LS_proj2out, planmap, Tmax, Tmin, color_bar, dx, title_display, sunits, $
               CBLBL=CBLBL, CBLIN=CBLIN, CBTICKS=CBTICKS, CBTICKVAL=CBTICKVAL, CBTICKLBL=CBTICKLBL, CBTICKLAB=CBTICKLAB, CBOUT=CBOUT, $
               MODASINH=MODASINH, HIST_EQUAL=HIST_EQUAL, ASINH=ASINH, LOG=LOG, LATLONGDIFF=LATLONGDIFF, CBLABOFF=CBLABOFF, $
               GNMCORDOFF=GNMCORDOFF, GNMOFF=GNMOFF, FNTsz=FNTsz, CBOFF=CBOFF, MOLOFF=MOLOFF, MOLCORDOFF=MOLCORDOFF, CRTCORDOFF=CRTCORDOFF, CRTOFF=CRTOFF, FIXMINUS=FIXMINUS, $
-              ORTHCORDOFF=ORTHCORDOFF, ORTHOFF=ORTHOFF
+              ORTCORDOFF=ORTCORDOFF, ORTOFF=ORTOFF
 
 ;===============================================================================
 ;+
@@ -2484,8 +2484,8 @@ IF N_ELEMENTS(MOLOFF) EQ 0 THEN MOLOFF = 0d
 IF N_ELEMENTS(MOLCORDOFF) EQ 0 THEN MOLCORDOFF = 0d
 IF N_ELEMENTS(CRTCORDOFF) EQ 0 THEN CRTCORDOFF = 0d
 IF N_ELEMENTS(CRTOFF) EQ 0 THEN CRTOFF = 0d
-IF N_ELEMENTS(ORTHCORDOFF) EQ 0 THEN ORTHCORDOFF = 0d
-IF N_ELEMENTS(ORTHOFF) EQ 0 THEN ORTHOFF = 0d
+IF N_ELEMENTS(ORTCORDOFF) EQ 0 THEN ORTCORDOFF = 0d
+IF N_ELEMENTS(ORTOFF) EQ 0 THEN ORTOFF = 0d
 IF N_ELEMENTS(FNTsz) EQ 0 THEN FNTsz = 8d
 IF N_ELEMENTS(CBOFF) EQ 0 THEN CBOFF = 0d
 ;
@@ -2699,7 +2699,7 @@ if (projtype eq 4) then begin
     vmin = - fudge         & vmax =         fudge
 ; position of the disc in the final window
     w_xll = 0.0 & w_xur = 1.0 & w_dx = w_xur - w_xll
-    w_yll = 0.15 + ORTHOFF & w_yur = 0.95 + ORTHOFF & w_dy = w_yur - w_yll
+    w_yll = 0.15 + ORTOFF & w_yur = 0.95 + ORTOFF & w_dy = w_yur - w_yll
     w_dx_dy = w_dx / w_dy       ; 1./.8
 ; color bar, position, dimension
     ;cbar_dx = 1./3.
@@ -5836,8 +5836,9 @@ vec_shine = vec_shine / sqrt(total(vec_shine^2))
 
 mode_col = keyword_set(hist_equal)
 ;mode_col = mode_col + 2*keyword_set(log) + 4*keyword_value(asinh, default=0, min=0, max=2)
-mode_col = mode_col + 2*keyword_set(log) + 4*keyword_value(asinh, default=0, min=0, max=2) ; + 8*keyword_set(modasinh) ; this could cause a problem if someone sets ASINH=2 and MODASINH, default to MODASINH
-IF KEYWORD_SET(MODASINH) THEN mode_col = mode_col + 2*keyword_set(log) + 4*keyword_set(asinh) + 8*keyword_set(modasinh)
+;mode_col = mode_col + 2*keyword_set(log) + 4*keyword_value(asinh, default=0, min=0, max=2) ; + 8*keyword_set(modasinh) ; this could cause a problem if someone sets ASINH=2 and MODASINH, default to MODASINH
+;IF KEYWORD_SET(MODASINH) THEN 
+mode_col = mode_col + 2*keyword_set(log) + 4*keyword_set(asinh) + 8*keyword_set(modasinh)
 
 sz = size(data)
 obs_npix = sz[1]
@@ -6363,7 +6364,7 @@ LS_proj2out, $
   CHARTHICK=charthick, STAGGER=stagger, JPEG=jpeg, $ ; And now the extra keywords added by LS
   CTDIR=CTDIR, CTFILE=CTFILE, GRMIN=GRMIN, GRMAX=GRMAX, GRLS=GRLS, IGRMIN=IGRMIN, IGRMAX=IGRMAX, IGRLS=IGRLS, $
   CBLBL=CBLBL, CBLIN=CBLIN, CBTICKS=CBTICKS, CBTICKVAL=CBTICKVAL, CBTICKLBL=CBTICKLBL, CBTICKLAB=CBTICKLAB, CBOUT=CBOUT, CBLABOFF=CBLABOFF, $
-  MODASINH=MODASINH, HIST_EQUAL=HIST_EQUAL, ASINH=ASINH, LOG=LOG, LATLONGDIFF=LATLONGDIFF, ORTHCORDOFF=CORDOFF, ORTHOFF=MAPOFF, FNTsz=FNTsz, CBOFF=CBOFF, FIXMINUS=FIXMINUS
+  MODASINH=MODASINH, HIST_EQUAL=HIST_EQUAL, ASINH=ASINH, LOG=LOG, LATLONGDIFF=LATLONGDIFF, ORTCORDOFF=CORDOFF, ORTOFF=MAPOFF, FNTsz=FNTsz, CBOFF=CBOFF, FIXMINUS=FIXMINUS
 
 w_num = !d.window
 ; restore original color table and PLOTS settings
